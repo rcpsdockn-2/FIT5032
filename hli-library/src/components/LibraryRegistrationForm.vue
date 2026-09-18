@@ -45,6 +45,25 @@
             </div>
           </div>
 
+          <div class="mb-3">
+            <label for="confirm-password" class="form-label">
+              Confirm Password:
+            </label>
+
+            <input
+              id="confirm-password"
+              type="password"
+              class="form-control"
+              v-model="formData.confirmPassword"
+              @blur="validatePasswordConfirmation"
+              @input="validatePasswordConfirmation"
+            >
+
+            <div v-if="errors.confirmPassword" class="text-danger mt-1">
+              {{ errors.confirmPassword }}
+            </div>
+          </div>
+
           <div class="mb-3 form-check">
             <input
               id="resident"
@@ -164,6 +183,7 @@ import Column from 'primevue/column'
 const formData = reactive({
   username: '',
   password: '',
+  confirmPassword: '',
   isAustralian: false,
   gender: '',
   reason: ''
@@ -172,6 +192,7 @@ const formData = reactive({
 const errors = reactive({
   username: '',
   password: '',
+  confirmPassword: '',
   isAustralian: '',
   gender: '',
   reason: ''
@@ -216,6 +237,21 @@ function validatePassword() {
   return true
 }
 
+function validatePasswordConfirmation() {
+  if (!formData.confirmPassword) {
+    errors.confirmPassword = 'Password confirmation is required'
+    return false
+  }
+
+  if (formData.password !== formData.confirmPassword) {
+    errors.confirmPassword = 'Passwords do not match'
+    return false
+  }
+
+  errors.confirmPassword = ''
+  return true
+}
+
 function validateResident() {
   if (!formData.isAustralian) {
     errors.isAustralian = 'Australian Resident must be selected'
@@ -249,6 +285,7 @@ function validateReason() {
 function submitForm() {
   const nameIsValid = validateName()
   const passwordIsValid = validatePassword()
+  const passwordConfirmationIsValid = validatePasswordConfirmation()
   const residentIsValid = validateResident()
   const genderIsValid = validateGender()
   const reasonIsValid = validateReason()
@@ -256,6 +293,7 @@ function submitForm() {
   if (
     !nameIsValid ||
     !passwordIsValid ||
+    !passwordConfirmationIsValid ||
     !residentIsValid ||
     !genderIsValid ||
     !reasonIsValid
@@ -275,12 +313,14 @@ function submitForm() {
 function clearForm() {
   formData.username = ''
   formData.password = ''
+  formData.confirmPassword = ''
   formData.isAustralian = false
   formData.gender = ''
   formData.reason = ''
 
   errors.username = ''
   errors.password = ''
+  errors.confirmPassword = ''
   errors.isAustralian = ''
   errors.gender = ''
   errors.reason = ''
