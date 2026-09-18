@@ -1,0 +1,22 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.app-content {
+  min-height: calc(100vh - 56px);
+}
+
+.page-shell {
+  max-width: 1100px;
+  padding-top: 2.5rem;
+  padding-bottom: 3rem;
+}
+
+.form-card {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.firebase-status {
+  white-space: pre-wrap;
+}

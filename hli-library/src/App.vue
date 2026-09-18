@@ -1,7 +1,12 @@
 <script setup>
-import LibraryRegistrationForm from './components/LibraryRegistrationForm.vue'
+import { RouterView } from 'vue-router'
+import BHeader from './components/BHeader.vue'
 </script>
 
 <template>
-  <LibraryRegistrationForm />
+  <BHeader />
+
+  <main class="app-content">
+    <RouterView />
+  </main>
 </template>
